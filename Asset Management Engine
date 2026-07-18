@@ -1,0 +1,72 @@
+# Asset Management Engine
+
+## Purpose
+
+Maintain an accurate inventory of managed assets and provide operational awareness of endpoint health, lifecycle status, and patch compliance.
+
+---
+
+## Inputs
+
+- Active Directory
+- Endpoint Inventory
+- PowerShell Discovery
+- Backup Status
+- Patch Status
+
+---
+
+## Processing
+
+- Inventory reconciliation.
+- Lifecycle tracking.
+- Patch verification.
+- Backup validation.
+- Operating system classification.
+
+---
+
+## Outputs
+
+- Asset Inventory
+- Lifecycle Report
+- Patch Compliance Report
+- Backup Status Report
+
+---
+
+## Metrics
+
+|Metric|Description|
+|---|---|
+|Total Assets|Managed endpoints|
+|Patch Compliance|Percentage fully patched|
+|Unsupported Systems|End-of-support assets|
+|Backup Success|Successful backup percentage|
+|Offline Assets|Assets not reporting|
+
+---
+
+## Example
+
+```
+Windows Servers
+
+42
+
+Linux Servers
+
+11
+
+Workstations
+
+318
+
+Patch Compliance
+
+96%
+
+Unsupported
+
+2
+```
