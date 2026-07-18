@@ -1,0 +1,110 @@
+This along with the visual chart is to demonstrate how the information moves, why it moves and what it supports.
+Which engines feed into which Dashboard.
+
+Engines > Dashboards
+Data Collection Engine >  None (backend service)
+Data Processing Engine >  None (backend service)
+Compliance Engine	     >    Compliance Dashboard, Executive Dashboard
+Vulnerability Correlation Engine	>  Vulnerability Dashboard, Risk Dashboard, Executive Dashboard
+Asset Management Engine  >	Asset Dashboard, Executive Dashboard
+Risk Assessment Engine	>  Risk Dashboard, Executive Dashboard
+POA&M Management Engine	>  POA&M Dashboard, Executive Dashboard
+
+
+Dashboard Dependencies
+
+##Executive Dashboard
+
+The executive dashboard should consume nearly everything.
+
+Compliance Engine
+Risk Assessment Engine
+Vulnerability Correlation Engine
+Asset Management Engine
+POA&M Management Engine
+
+Metrics to include:
+
+Overall Compliance
+Overall Risk Score
+Patch Compliance
+Critical Findings
+Open POA&Ms
+Asset Health
+Monthly Trends
+
+
+##Compliance Dashboard
+
+Consumes only the Compliance Engine.
+
+Shows:
+
+Control Family Scores
+Failed Controls
+Framework Compliance
+Evidence Coverage
+Audit Readiness
+
+
+##Vulnerability Dashboard
+
+Consumes the Vulnerability Correlation Engine.
+
+Shows:
+
+Critical/High/Medium/Low
+CVE Trends
+CVSS Distribution
+Duplicate Findings Removed
+Scanner Comparison
+Top Vulnerabilities
+
+
+##Asset Dashboard
+
+Consumes the Asset Management Engine.
+
+Shows:
+
+Server Count
+Workstation Count
+Switches
+Firewalls
+Unsupported Systems
+Patch Status
+Backup Status
+Offline Assets
+
+
+##Risk Dashboard
+
+Consumes:
+Risk Assessment Engine
+Vulnerability Correlation Engine
+
+Shows:
+
+Risk Heat Map
+Risk Register
+Likelihood vs Impact
+Top Business Risks
+Trending Risk Score
+High-Risk Assets
+
+
+##POA&M Dashboard
+
+Consumes: 
+POA&M Management Engine
+Risk Assessment Engine
+Compliance Engine
+
+Shows:
+
+Open POA&Ms
+Closed POA&Ms
+Overdue Items
+Upcoming Milestones
+Responsible Owners
+SLA Compliance
