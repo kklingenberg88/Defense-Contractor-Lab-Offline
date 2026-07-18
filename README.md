@@ -58,6 +58,29 @@ Those spreadsheets will be fed into a network drive as a single source of truth.
 
           Executive Dashboards
 
+```
+
+
+Our project's core principle is "Single source of truth". We accomplish this with a Master spreadsheet.
+What is functioning behind the scenes is a lot of automation to compiling information.
+Create templates through powershell script parser, extracting highly useful information to a condensed XLSM book, assembling information across multiple spreadsheets in the archieve, and finally integrating them with Power BI to create dashboards.
+
+Once an internal soft architecture has been created, we streamline the process for Data collection and Processing.
+Below is a quick explaination of what the master spreadsheet will be:
+
+1st Page will have condensed findings and actionable items pulled from others
+Overall Compliance, Risk Score, Critical findings, Patch Compliance, Open POAMs
+
+2nd Page > References findings among all books with a vulnerability score and remediation steps
+This functions as the source of truth, and has cross referenced findings with evidence
+
+3rd Page > Nessus findings that reference endpoint, CVSS and CVE
+
+4th Page > STIG/SCAP findings reporting the same information for cross reference on book 3
+
+5th Page > Windows Version/Patch Status for endpoints
+
+**This will have 4 total spreadsheets feeding into it.
                     │
 
     		Audit Deliverables
