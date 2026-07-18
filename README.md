@@ -81,8 +81,4 @@ This functions as the source of truth, and has cross referenced findings with ev
 5th Page > Windows Version/Patch Status for endpoints
 
 **This will have 4 total spreadsheets feeding into it.
-                    │
-
-    		Audit Deliverables
-
-
+   
