@@ -11,7 +11,7 @@ Process from raw data in a standard template form, to a condensed XLSM book, to 
 1st Page will have condensed findings and actionable items pulled from others
 	Overall Compliance, Risk Score, Critical findings, Patch Compliance, Open POAMs
 2nd Page > References findings among all books with a vulnerability score and remediation steps
-	This functions as the source of truth, and has cross referenced findings with evidence
+	This functions as the source of truth, and eliminates duplicate entries
 3rd Page > Nessus findings that reference endpoint, CVSS and CVE
 4th Page > STIG/SCAP findings reporting the same information for cross reference on book 3
 5th Page > Windows Version/Patch Status for endpoints
