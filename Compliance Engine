@@ -1,0 +1,75 @@
+# Compliance Engine
+
+## Purpose
+
+Evaluate endpoint compliance against one or more regulatory frameworks and produce standardized compliance scores, evidence, and remediation recommendations.
+
+---
+
+## Inputs
+
+- STIG Checklists
+- SCAP Results
+- PowerShell Control Validation
+- Registry Values
+- Group Policy Results
+- Asset Inventory
+- Security Baseline Definitions
+
+---
+
+## Processing
+
+- Validate implemented controls.
+- Map findings to NIST SP 800-53, NIST SP 800-171, ISO 27001, CMMC Level 2, or other supported frameworks.
+- Eliminate duplicate findings.
+- Calculate compliance percentages by control family.
+- Associate evidence with each control.
+- Generate remediation tasks for failed controls.
+
+---
+
+## Outputs
+
+- Compliance Workbook
+- Control Status Report
+- Evidence Repository
+- Compliance Score
+- Failed Control List
+- Executive Metrics
+
+---
+
+## Metrics
+
+|Metric|Description|
+|---|---|
+|Overall Compliance|Percentage of implemented controls|
+|Control Family Score|Compliance by NIST control family|
+|Failed Controls|Number of controls requiring remediation|
+|Evidence Coverage|Percentage of controls with supporting artifacts|
+|Framework Coverage|Number of supported compliance frameworks|
+
+---
+
+## Example
+
+```
+Endpoint: WS-104
+
+Framework: NIST SP 800-171
+
+Control Family: AC
+
+Compliance: 97%
+
+Failed Controls
+
+AC-2
+AC-17
+
+Evidence
+
+Group Policy Export
+Registry Validation
+PowerShell Results
