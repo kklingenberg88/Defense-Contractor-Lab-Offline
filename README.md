@@ -1,5 +1,4 @@
-Defense-Contractor-Lab-Offline
-This is a Project outline for an automated offline Governance, Risk, and Compliance platform that consolidates vulnerability data, compliance assessments, asset inventories, and remediation activities into a centralized evidence repository. Through scheduled automation, the platform normalizes data from multiple security tools, correlates duplicate findings, maps vulnerabilities to compliance frameworks, calculates organizational risk, generates POA&Ms, and presents executive dashboards for continuous monitoring and audit readiness.
+This Project outline is for an automated offline Governance, Risk, and Compliance platform that consolidates vulnerability data, compliance assessments, asset inventories, and remediation activities into a centralized evidence repository. Through scheduled automation, the platform normalizes data from multiple security tools, correlates duplicate findings, maps vulnerabilities to compliance frameworks, calculates organizational risk, generates POA&Ms, and presents executive dashboards for continuous monitoring and audit readiness.
 
 # Offline GRC Automation Platform
 
