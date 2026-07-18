@@ -4,7 +4,7 @@ Which engines feed into which Dashboard.
 Engines > Dashboards
 Data Collection Engine >  None (backend service)
 Data Processing Engine >  None (backend service)
-Compliance Engine	     >    Compliance Dashboard, Executive Dashboard
+Compliance Engine	    >    Compliance Dashboard, Executive Dashboard
 Vulnerability Correlation Engine	>  Vulnerability Dashboard, Risk Dashboard, Executive Dashboard
 Asset Management Engine  >	Asset Dashboard, Executive Dashboard
 Risk Assessment Engine	>  Risk Dashboard, Executive Dashboard
