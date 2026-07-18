@@ -26,15 +26,6 @@ Its purpose is to automate the collection, normalization, correlation and presen
 
 ---
 
-## Objectives
-
-- Automate vulnerability collection
-- Correlate duplicate findings
-- Track patch compliance
-- Generate executive dashboards
-- Produce audit evidence
-- Simplify POA&M management
-
 ---
 
 ```
