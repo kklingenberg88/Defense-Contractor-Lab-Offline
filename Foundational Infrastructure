@@ -1,0 +1,439 @@
+## Release 0.1 Objectives
+
+This release does **not** perform compliance checking. Its purpose is to establish the application framework.
+
+Deliverables:
+
+- Repository structure
+- Module loader
+- Configuration system
+- Logging engine
+- SQLite database initialization
+- Inventory object model
+- Standardized compliance result object
+- Report engine scaffold
+- Plugin architecture
+- Documentation
+
+---
+
+# Repository Structure
+
+```
+ComplianceFramework/
+│
+├── Invoke-Compliance.ps1          # Main entry point
+├── Install.ps1                    # First-time setup
+├── Initialize-Database.ps1
+├── README.md
+├── LICENSE
+│
+├── Config/
+│   ├── Frameworks.json
+│   ├── ReportSettings.json
+│   ├── Logging.json
+│   └── Database.json
+│
+├── Modules/
+│   ├── Core.psm1
+│   ├── Database.psm1
+│   ├── Inventory.psm1
+│   ├── Logging.psm1
+│   ├── Reporting.psm1
+│   └── Utilities.psm1
+│
+├── Checks/
+│   ├── Windows/
+│   ├── Linux/
+│   ├── VMware/
+│   ├── Azure/
+│   └── Network/
+│
+├── FrameworkMappings/
+│
+├── Reports/
+│
+├── Logs/
+│
+├── Database/
+│   └── Compliance.db
+│
+├── Assets/
+│
+└── Docs/
+```
+
+---
+
+# SQLite Database
+
+Instead of hundreds of spreadsheets, everything is stored relationally.
+
+## Assets
+
+```
+Assets
+------
+AssetID
+Hostname
+IPAddress
+MACAddress
+OperatingSystem
+Domain
+BusinessUnit
+Owner
+Criticality
+Status
+LastSeen
+```
+
+---
+
+## Findings
+
+```
+Findings
+---------
+FindingID
+AssetID
+CheckID
+Severity
+Status
+Evidence
+Remediation
+DateDetected
+DateResolved
+```
+
+---
+
+## Controls
+
+```
+Controls
+----------
+ControlID
+Framework
+ControlName
+Description
+Category
+```
+
+---
+
+## Framework Mapping
+
+```
+Mappings
+---------
+MappingID
+CheckID
+Framework
+ControlID
+```
+
+---
+
+## Vulnerabilities
+
+```
+Vulnerabilities
+---------------
+PluginID
+CVE
+Title
+Severity
+CVSS
+ExploitAvailable
+VendorPatch
+```
+
+---
+
+## POAM
+
+```
+POAM
+-----
+POAMID
+FindingID
+AssignedTo
+Priority
+TargetDate
+CompletionDate
+Status
+```
+
+---
+
+## Scan History
+
+```
+ScanHistory
+-----------
+ScanID
+AssetID
+Scanner
+Date
+Duration
+Status
+```
+
+---
+
+# Standard Object
+
+Every module returns the exact same object.
+
+```
+class ComplianceFinding {
+
+    [string]$Asset
+
+    [string]$Hostname
+
+    [string]$IPAddress
+
+    [string]$CheckID
+
+    [string]$Category
+
+    [string]$Severity
+
+    [string]$Status
+
+    [string]$Evidence
+
+    [string]$Remediation
+
+    [datetime]$Timestamp
+
+}
+```
+
+Nothing else in the project should invent its own format.
+
+---
+
+# Logging
+
+Every action writes to a central log.
+
+```
+2026-07-21 08:01:23
+
+INFO
+
+Loading Framework
+```
+
+```
+2026-07-21 08:01:24
+
+INFO
+
+Database Connected
+```
+
+```
+2026-07-21 08:01:25
+
+INFO
+
+Inventory Started
+```
+
+```
+2026-07-21 08:01:26
+
+WARNING
+
+BitLocker Module Missing
+```
+
+```
+2026-07-21 08:01:27
+
+ERROR
+
+Unable to parse Nessus XML
+```
+
+---
+
+# Configuration
+
+Everything configurable belongs in JSON.
+
+Example
+
+```
+{
+    "Database":"Database\\Compliance.db",
+
+    "LogLevel":"Info",
+
+    "Reports":"Reports",
+
+    "MaxThreads":8,
+
+    "ExportExcel":true,
+
+    "ExportPowerBI":true
+}
+```
+
+No hardcoded values.
+
+---
+
+# Inventory Module
+
+Example output
+
+```
+Hostname
+
+DC01
+
+IPAddress
+
+10.10.50.10
+
+MAC
+
+00-50-56-A2-1B-9D
+
+OS
+
+Windows Server 2022
+
+CPU
+
+Intel Xeon Gold
+
+RAM
+
+64 GB
+
+TPM
+
+Enabled
+
+BitLocker
+
+Enabled
+
+Secure Boot
+
+Enabled
+
+Defender
+
+Running
+```
+
+---
+
+# Reporting
+
+Release 0.1 produces
+
+```
+Inventory.xlsx
+```
+
+```
+Inventory.csv
+```
+
+```
+Inventory.json
+```
+
+No dashboards yet.
+
+---
+
+# Module Loader
+
+Every file inside
+
+```
+Modules\
+```
+
+is automatically imported.
+
+Likewise
+
+```
+Checks\
+```
+
+Every script is discovered dynamically.
+
+```
+Check-BitLocker.ps1
+```
+
+---
+
+# Versioning
+
+Every release will receive a semantic version.
+
+```
+0.1.0
+
+Framework
+
+Database
+
+Inventory
+```
+
+```
+0.2.0
+
+Windows Checks
+```
+
+```
+0.3.0
+
+Framework Mapping
+```
+
+```
+0.4.0
+
+Nessus Parser
+```
+
+---
+
+# Documentation
+
+Release 0.1 includes:
+
+- `README.md` — Project overview, installation, architecture, supported platforms, roadmap.
+- `CONTRIBUTING.md` — Coding standards, module conventions, pull request workflow.
+- `CHANGELOG.md` — Semantic version history.
+- `ARCHITECTURE.md` — Component relationships, data flow, and database schema.
+- `DATABASE.md` — Table definitions and relationships.
+- `DEVELOPMENT.md` — Local development environment, testing, and release process.
+
+## Coding Standards
+
+To keep the framework maintainable over time, I would establish these rules from the outset:
+
+- One responsibility per module.
+- No hardcoded framework mappings in PowerShell.
+- All mappings stored in JSON.
+- Every check returns the standardized `ComplianceFinding` object.
+- Every function uses comment-based help and approved PowerShell verbs.
+- Every module includes Pester tests for troubleshooting.
+- All output passes through the reporting engine; checks never write directly to Excel or the database.
+- Structured logging for all major operations.
+- Semantic versioning for releases.
