@@ -290,6 +290,7 @@ Versioning
 
 Every release receives a semantic version.
 
+
 0.1.0
 
 Framework
@@ -316,9 +317,11 @@ CHANGELOG.md — Semantic version history.
 ARCHITECTURE.md — Component relationships, data flow, and database schema.
 DATABASE.md — Table definitions and relationships.
 DEVELOPMENT.md — Local development environment, testing, and release process.
+
+
 Coding Standards
 
-To keep the framework maintainable over time, I would establish these rules from the outset:
+To keep the framework maintainable over time, establish these rules from the outset:
 
 One responsibility per module.
 One technical check per script.
