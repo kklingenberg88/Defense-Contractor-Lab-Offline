@@ -14,8 +14,8 @@ Standardized compliance result object
 Report engine scaffold
 Plugin architecture
 Documentation
-Repository Structure
-ComplianceFramework/
+
+Compliance Framework/
 │
 ├── Invoke-Compliance.ps1          # Main entry point
 ├── Install.ps1                    # First-time setup
@@ -56,10 +56,10 @@ ComplianceFramework/
 ├── Assets/
 │
 └── Docs/
+
 SQLite Database
 
 Instead of hundreds of spreadsheets, everything is stored relationally.
-
 Assets
 Assets
 ------
@@ -163,36 +163,26 @@ Nothing else in the project should invent its own format.
 Logging
 
 Every action writes to a central log.
-
 2026-07-21 08:01:23
-
-INFO
-
 Loading Framework
+
 2026-07-21 08:01:24
-
-INFO
-
 Database Connected
+
 2026-07-21 08:01:25
-
-INFO
-
 Inventory Started
+
 2026-07-21 08:01:26
-
 WARNING
-
 BitLocker Module Missing
 2026-07-21 08:01:27
 
 ERROR
-
 Unable to parse Nessus XML
+
+
 Configuration
-
 Everything configurable belongs in JSON.
-
 Example
 
 {
@@ -319,9 +309,8 @@ DATABASE.md — Table definitions and relationships.
 DEVELOPMENT.md — Local development environment, testing, and release process.
 
 
-Coding Standards
-
-To keep the framework maintainable over time, establish these rules from the outset:
+Coding Standards reference
+Keeping the framework maintainable over time by establishing these rules from the outset:
 
 One responsibility per module.
 One technical check per script.
