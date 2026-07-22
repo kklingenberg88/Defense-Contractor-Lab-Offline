@@ -2,7 +2,8 @@ PowerShell Scripts
 This is from the ground level to the top presentation.
 You want to have all of these layed out, set with windows task scheduler and forwarding data to both database and then to the dashboards.
 
-Core Framework (~10)
+
+Core Framework
 
 Invoke-SentinelGRC.ps1
 Install.ps1
@@ -14,7 +15,10 @@ Invoke-Compliance.ps1
 Invoke-Reporting.ps1
 Invoke-Imports.ps1
 Update-FrameworkMappings.ps1
-PowerShell Modules (~15)
+
+
+PowerShell Modules
+
 Core.psm1
 Logging.psm1
 Inventory.psm1
@@ -47,8 +51,7 @@ Check-PowerShellLogging.ps1
 
 ...
 
-Approximately 40 scripts
-Import Parsers (~10)
+Import Parsers
 
 Import-Nessus.ps1
 Import-STIG.ps1
@@ -59,7 +62,7 @@ Import-OpenVAS.ps1
 
 ...
 
-Reporting (~8)
+Reporting
 Export-Excel.ps1
 Export-PowerBI.ps1
 Export-JSON.ps1
@@ -86,8 +89,7 @@ Weekly	Database Maintenance	<1 minute
 
 Database Writes
 
-Every module writes to SQLite through a single database module.
-
+Every module writes to SQLite through a single database module. 
 No module talks to SQLite directly.
 
 Check-BitLocker
@@ -194,9 +196,11 @@ Scan History: ~180,000 rows over a year if retained
 Framework Mappings: ~1,000 rows
 Controls: ~2,000–3,000 rows
 
-SQLite handles this comfortably; the database would typically remain under 500 MB.
+SQLite handles this comfortably; the database would typically remain under a cozy 500 MB.
+Remember, as you scale this, it will be heavier, slower. Your focus should be to keep it light.
 
-Architectural Recommendation
+
+Architectural alternative
 
 Instead of Windows Task Scheduler invoking different scripts, every scheduled task would call the same entry point with a job name.
 
