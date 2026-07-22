@@ -1,0 +1,702 @@
+# Contributing to SentinelGRC
+
+This project is intended to become a modular, open-source Governance, Risk, and Compliance (GRC) automation framework. Contributions should improve maintainability, reliability, portability, and technical accuracy while preserving the project's architectural principles.
+
+This document defines the standards expected for all contributions.
+
+---
+
+# Guiding Principles
+
+Every contribution should align with the following principles.
+
+## Modularity
+
+Each component should perform one responsibility.
+
+Examples include:
+
+- Inventory collection
+    
+- Logging
+    
+- SQLite interaction
+    
+- Report generation
+    
+- Compliance checks
+    
+- Framework mappings
+    
+
+Avoid combining unrelated functionality into a single module.
+
+---
+
+## Reusability
+
+Technical checks should never be duplicated.
+
+Evidence should be collected once and mapped to multiple compliance frameworks.
+
+Incorrect:
+
+```
+Check-NISTPasswordPolicy.ps1
+
+Check-CMMCPasswordPolicy.ps1
+
+Check-STIGPasswordPolicy.ps1
+```
+
+Correct:
+
+```
+Check-PasswordPolicy.ps1
+
+↓
+
+Mapped to
+
+CMMC
+
+NIST 800-53
+
+NIST 800-171
+
+NIST 800-172
+
+STIG
+
+CIS
+```
+
+---
+
+## Vendor Neutrality
+
+SentinelGRC is designed to operate independently of commercial GRC platforms.
+
+Contributions should avoid unnecessary dependencies on proprietary software or services.
+
+Current technologies include:
+
+- PowerShell
+    
+- SQLite
+    
+- JSON
+    
+- CSV
+    
+- Excel
+    
+- Power BI
+    
+
+---
+
+## Transparency
+
+Framework mappings should remain data-driven.
+
+---
+
+# Repository Structure
+
+```
+SentinelGRC/
+
+Assets/
+
+Checks/
+
+Config/
+
+Database/
+
+Docs/
+
+FrameworkMappings/
+
+Logs/
+
+Modules/
+
+Reports/
+
+SQL/
+
+Tests/
+
+Tools/
+```
+
+Each one of the directories has a single responsibility.
+
+---
+
+# Branch Strategy
+
+The project follows a GitFlow-inspired workflow with this concept being hosted on the platform.
+
+```
+main
+```
+
+Stable releases.
+
+```
+develop
+```
+
+Integration branch for upcoming releases.
+
+```
+feature/<feature-name>
+```
+
+New functionality.
+
+Examples:
+
+```
+feature/windows-inventory
+
+feature/sqlite-layer
+
+feature/nessus-parser
+```
+
+```
+bugfix/<issue>
+```
+
+Bug corrections and explainations.
+
+```
+release/<version>
+```
+
+Release preparation.
+
+```
+hotfix/<version>
+```
+
+Critical fixes for released versions, think of this as patch notes.
+
+---
+
+# Pull Request Process
+
+Before opening a Pull Request:
+
+- Create a feature branch.
+    
+- Ensure the project builds successfully.
+    
+- Execute all automated tests.
+    
+- Update documentation if behavior changes.
+    
+- Update the CHANGELOG when applicable.
+    
+- Resolve merge conflicts.
+    
+
+Pull Requests should contain a concise description explaining:
+
+- Purpose
+    
+- Technical approach
+    
+- Modules modified
+    
+- Testing performed
+    
+- Known limitations
+    
+
+---
+
+# Coding Standards
+
+## Approved Verbs
+
+PowerShell functions should use Microsoft-approved verbs.
+
+Examples:
+
+```
+Get-
+
+Set-
+
+Test-
+
+Invoke-
+
+Import-
+
+Export-
+
+Initialize-
+
+New-
+
+Remove-
+```
+
+Avoid custom verbs, keep it simple.
+
+---
+
+## Function Naming
+
+Functions should follow:
+
+```
+Verb-Noun
+```
+
+Examples:
+
+```
+Get-Inventory
+
+Test-BitLocker
+
+Invoke-Compliance
+
+Import-NessusScan
+```
+
+---
+
+## Variables
+
+Use camelCase.
+
+Example:
+
+```
+$assetInventory
+
+$databaseConnection
+
+$frameworkMappings
+```
+
+---
+
+## Classes
+
+Use PascalCase.
+
+Example:
+
+```
+ComplianceFinding
+
+AssetRecord
+
+FrameworkMapping
+```
+
+---
+
+## Modules
+
+Each module should have a clearly defined purpose. 
+Keep it simple like a filing cabinet to avoid a rat's nest
+
+Correct:
+
+```
+Logging.psm1
+
+↓
+
+Logging only
+```
+
+Incorrect:
+
+```
+Logging.psm1
+
+↓
+
+Logging
+
+Inventory
+
+SQLite
+
+Reporting
+```
+
+---
+
+# Compliance Checks
+
+Each technical check should exist as an independent script.
+
+Examples:
+
+```
+Checks/
+
+Windows/
+
+Check-BitLocker.ps1
+
+Check-LAPS.ps1
+
+Check-Firewall.ps1
+```
+
+Each script should perform one technical validation.
+
+---
+
+# Standard Output Object
+
+Every compliance check must return the standard SentinelGRC object.
+
+Required properties include:
+
+```
+Asset
+
+Hostname
+
+IPAddress
+
+CheckID
+
+Category
+
+Severity
+
+Status
+
+Evidence
+
+Remediation
+
+Timestamp
+```
+
+Compliance checks must **not**:
+
+- Write to SQLite
+    
+- Generate Excel files
+    
+- Produce reports
+    
+- Display formatted output
+    
+
+Checks collect evidence only.
+
+---
+
+# Framework Mappings
+
+Framework mappings belong exclusively inside the `FrameworkMappings/` directory.
+
+Example:
+
+```
+CheckID
+
+↓
+
+PW001
+
+↓
+
+NIST 800-53
+
+IA-5
+
+↓
+
+CMMC
+
+IA.L2-3.5.7
+
+↓
+
+STIG
+
+WN22-AC-000010
+```
+
+PowerShell modules should never contain hardcoded framework identifiers.
+
+---
+
+# Documentation Standards
+
+Public functions require comment-based help.
+
+Documentation should include:
+
+- Synopsis
+    
+- Description
+    
+- Parameters
+    
+- Outputs
+    
+- Examples
+    
+- Notes
+    
+
+Markdown documentation should be updated whenever functionality changes.
+
+---
+
+# Testing Requirements
+
+Every significant contribution should include automated testing where practical.
+
+Testing categories include:
+
+- Unit Tests
+    
+- Module Tests
+    
+- Parser Tests
+    
+- Database Tests
+    
+- Integration Tests
+    
+
+Pester is the project's testing framework.
+
+---
+
+# Static Analysis
+
+All code should pass **PSScriptAnalyzer** before submission.
+
+Warnings should be corrected whenever possible.
+
+Suppressions require documented justification.
+
+---
+
+# Logging
+
+Modules should use the centralized logging engine.
+
+Avoid direct use of:
+
+```
+Write-Host
+```
+
+for operational logging.
+
+Use the logging module instead.
+
+---
+
+# Error Handling
+
+Public functions should implement structured exception handling.
+
+```
+try
+
+catch
+
+finally
+```
+
+Errors should provide actionable information and include sufficient context for troubleshooting.
+
+---
+
+# Database Changes
+
+SQLite schema modifications should be introduced through migration scripts.
+
+Avoid modifying production databases manually.
+
+Schema updates belong in:
+
+```
+SQL/
+
+Migrations/
+```
+
+---
+
+# Commit Message Standards
+
+Commit messages should describe intent.
+
+Preferred examples:
+
+```
+Add Windows inventory module
+
+Implement SQLite connection pooling
+
+Refactor reporting engine
+
+Add STIG parser
+
+Update framework mappings
+```
+
+Avoid messages such as:
+
+```
+Update
+
+Fix
+
+Changes
+
+Miscellaneous
+```
+
+---
+
+# Issue Reporting
+
+Bug reports should include:
+
+- SentinelGRC version
+    
+- Operating system
+    
+- PowerShell version
+    
+- Reproduction steps
+    
+- Expected behavior
+    
+- Actual behavior
+    
+- Relevant logs
+    
+- Screenshots when appropriate
+    
+
+---
+
+# Feature Requests
+
+Feature requests should explain:
+
+- Problem being solved
+    
+- Proposed solution
+    
+- Alternative approaches considered
+    
+- Expected benefit
+    
+- Compatibility considerations
+    
+
+---
+
+# Security
+
+Do not submit:
+
+- Credentials
+    
+- API keys
+    
+- Certificates
+    
+- Private keys
+    
+- Customer information
+    
+- Production configuration files
+    
+
+Security vulnerabilities should be reported privately according to the project's security policy rather than through public issues.
+
+---
+
+# Code Review Criteria
+
+Reviewers evaluate contributions based on:
+
+- Architectural consistency
+    
+- Readability
+    
+- Maintainability
+    
+- Technical correctness
+    
+- Test coverage
+    
+- Documentation quality
+    
+- Backward compatibility
+    
+- Performance considerations
+    
+
+Approval indicates the contribution meets the project's standards but does not guarantee compatibility with future releases.
+
+---
+
+# Project Roadmap Alignment
+
+Contributions that align with the current roadmap are generally prioritized.
+
+Current priorities include:
+
+1. Core framework
+    
+2. SQLite integration
+    
+3. Inventory collection
+    
+4. Windows compliance checks
+    
+5. Framework mappings
+    
+6. STIG and SCAP parsing
+    
+7. Nessus correlation
+    
+8. Reporting engine
+    
+9. Power BI integration
+    
+10. Historical compliance tracking
+    
+
+---
+
+# Contributor Recognition
+
+All accepted contributions are acknowledged through Git history.
+
+Significant architectural contributions may also be recognized in project release notes and documentation.
+
+---
+
+# Final Note
+
+SentinelGRC is intended to be a maintainable, extensible, and vendor-neutral compliance automation framework. Every contribution should strengthen that objective by emphasizing modular design, reusable technical evidence collection, and data-driven framework mappings over framework-specific implementations.
