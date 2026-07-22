@@ -1,72 +1,320 @@
-# Asset Management Engine
+Archer and ServiceNow are effective because they use a normalized relational model. 
+This database is created to mirror that philosophy and have a single repository of ultimate truth.
 
-## Purpose
+The goal is to separate:
 
-Maintain an accurate inventory of managed assets and provide operational awareness of endpoint health, lifecycle status, and patch compliance.
+- Assets
+- Technical Evidence
+- Compliance Controls
+- Framework Mappings
+- Vulnerabilities
+- Risks
+- POA&M
+- Scan History
 
----
+This avoids duplication. A single piece of evidence (e.g., "BitLocker Enabled") can satisfy multiple frameworks without being stored multiple times.
 
-## Inputs
-
-- Active Directory
-- Endpoint Inventory
-- PowerShell Discovery
-- Backup Status
-- Patch Status
-
----
-
-## Processing
-
-- Inventory reconciliation.
-- Lifecycle tracking.
-- Patch verification.
-- Backup validation.
-- Operating system classification.
-
----
-
-## Outputs
-
-- Asset Inventory
-- Lifecycle Report
-- Patch Compliance Report
-- Backup Status Report
-
----
-
-## Metrics
-
-|Metric|Description|
-|---|---|
-|Total Assets|Managed endpoints|
-|Patch Compliance|Percentage fully patched|
-|Unsupported Systems|End-of-support assets|
-|Backup Success|Successful backup percentage|
-|Offline Assets|Assets not reporting|
-
----
-
-## Example
+# High-Level Entity Relationship Diagram
 
 ```
-Windows Servers
+                    +------------------+
+                    |      Assets      |
+                    +------------------+
+                    | AssetID (PK)     |
+                    | Hostname         |
+                    | IPAddress        |
+                    | MACAddress       |
+                    | OperatingSystem  |
+                    | Domain           |
+                    | Owner            |
+                    | Criticality      |
+                    | BusinessUnit     |
+                    | Status           |
+                    +--------+---------+
+                             |
+                             |          
+                             |
+          +------------------+------------------+
+          |                  |                  |
+          |                  |                  |
+          ▼                  ▼                  ▼
+ +----------------+   +---------------+  +----------------+
+ |  ScanHistory   |   | Technical     |  | Vulnerabilities|
+ |                |   | Evidence      |  |                |
+ +----------------+   +---------------+  +----------------+
+ | ScanID (PK)    |   | EvidenceID    |  | VulnID (PK)    |
+ | AssetID (FK)   |   | AssetID (FK)  |  | AssetID (FK)   |
+ | Scanner        |   | CheckID       |  | PluginID       |
+ | ScanDate       |   | Value         |  | CVE            |
+ | Duration       |   | Status        |  | Severity       |
+ | Version        |   | Timestamp     |  | CVSS           |
+ +----------------+   +---------------+  | Solution       |
+                                         +-------+--------+
+                                                 |
+                                                 |
+                                                 ▼
+                                        +-------------------+
+                                        |    POAM           |
+                                        +-------------------+
+                                        | POAMID (PK)       |
+                                        | VulnID (FK)       |
+                                        | AssignedTo        |
+                                        | DueDate           |
+                                        | Status            |
+                                        +-------------------+
 
-42
+                 +----------------------+
+                 |   Technical Checks   |
+                 +----------------------+
+                 | CheckID (PK)         |
+                 | Category             |
+                 | Description          |
+                 | Severity             |
+                 +----------+-----------+
+                            |
+                            |
+                            |
+                            ▼
+                 +-----------------------+
+                 | FrameworkMappings     |
+                 +-----------------------+
+                 | MappingID (PK)        |
+                 | CheckID (FK)          |
+                 | FrameworkID (FK)      |
+                 | ControlID             |
+                 +-----------+-----------+
+                             |
+                             |
+                             ▼
+                   +---------------------+
+                   | ComplianceFramework |
+                   +---------------------+
+                   | FrameworkID (PK)    |
+                   | Name                |
+                   | Version             |
+                   +---------------------+
+```
 
-Linux Servers
+---
 
-11
+# Assets Table
 
-Workstations
 
-318
+```
+Assets
+```
 
-Patch Compliance
+|Column|Type|Purpose|
+|---|---|---|
+|AssetID|INTEGER PK|Internal identifier|
+|Hostname|TEXT|System name|
+|FQDN|TEXT|Fully qualified domain name|
+|IPAddress|TEXT|Primary IP|
+|MACAddress|TEXT|MAC|
+|OperatingSystem|TEXT|Windows/Linux|
+|Version|TEXT|OS Version|
+|Domain|TEXT|AD Domain|
+|SerialNumber|TEXT|Asset tracking|
+|Manufacturer|TEXT|Dell/HP/etc|
+|Model|TEXT|Hardware model|
+|Owner|TEXT|Business owner|
+|BusinessUnit|TEXT|Organizational mapping|
+|Criticality|TEXT|High/Medium/Low|
+|LastSeen|DATETIME|Last inventory|
 
-96%
+---
 
-Unsupported
+# TechnicalChecks
 
-2
+This defines every reusable check.
+
+```
+TechnicalChecks
+```
+
+|CheckID|Category|Description|
+|---|---|---|
+|PW001|IA|Password Policy|
+|FW001|SC|Firewall Enabled|
+|BL001|SC|BitLocker Enabled|
+|AU001|AU|Audit Logging|
+
+Only one row per check to avoid obscurity.
+
+---
+
+# TechnicalEvidence
+
+```
+TechnicalEvidence
+```
+
+|EvidenceID|AssetID|CheckID|Value|Status|
+|---|---|---|---|---|
+|1|5|PW001|14 Characters|Pass|
+|2|5|FW001|Enabled|Pass|
+|3|5|BL001|Enabled|Pass|
+
+Notice: Password Policy is defined once.
+
+Evidence references it.
+
+---
+
+# Frameworks
+
+```
+Frameworks
+```
+
+|FrameworkID|Name|
+|---|---|
+|1|CMMC 2.0|
+|2|NIST 800-171|
+|3|NIST 800-53|
+|4|NIST 800-172|
+|5|STIG|
+|6|CIS|
+
+---
+
+# FrameworkMappings
+
+This is where the magic happens.
+
+```
+FrameworkMappings
+```
+
+|CheckID|Framework|Control|
+|---|---|---|
+|PW001|NIST80053|IA-5|
+|PW001|CMMC|IA.L2-3.5.7|
+|PW001|STIG|WN22-AC-000010|
+|PW001|CIS|1.1.2|
+
+Now a single PowerShell check satisfies four frameworks.
+
+---
+
+# Vulnerabilities
+
+Imported from Nessus.
+
+```
+Vulnerabilities
+```
+
+|VulnID|AssetID|PluginID|CVE|Severity|
+|---|---|---|---|---|
+|1|5|42873|CVE-2024-xxxx|Medium|
+
+---
+
+# STIG Findings
+
+Rather than mixing STIG results into Vulnerabilities, keep them separate because they represent compliance deviations rather than scanner plugins.
+
+```
+STIGFindings
+```
+
+|FindingID|AssetID|RuleID|STIGID|Status|
+|---|---|---|---|---|
+|1|5|SV-xxxxx|WN22-AC-000010|Open|
+
+---
+
+# SCAP Results
+
+```
+SCAPResults
+```
+
+|ResultID|AssetID|RuleID|Result|
+|---|---|---|---|
+|1|5|xccdf_org...|Fail|
+
+This preserves the original SCAP identifiers.
+
+---
+
+# Risks
+
+```
+Risks
+```
+
+|RiskID|AssetID|Severity|Likelihood|Impact|
+|---|---|---|---|---|
+
+Eventually this becomes your Risk Register.
+
+---
+
+# POA&M
+
+```
+POAM
+```
+
+| POAMID | FindingID | AssignedTo | DueDate | Status |
+
+Links to
+
+- Vulnerability
+- STIG
+- SCAP
+
+through a foreign key.
+
+---
+
+# Scan History
+
+Every run gets recorded.
+
+```
+ScanHistory
+```
+
+|ScanID|Scanner|Date|Duration|
+|---|---|---|---|
+
+Supports historical reporting.
+
+---
+
+# Relationships
+
+```
+Assets
+   │
+   ├─────────────┐
+   │             │
+   ▼             ▼
+Evidence     Vulnerabilities
+   │             │
+   ▼             ▼
+Checks         POA&M
+   │
+   ▼
+FrameworkMappings
+   │
+   ▼
+Frameworks
+
+Assets
+   │
+   ├──────────────► STIG Findings
+   │
+   └──────────────► SCAP Results
+
+Assets
+   │
+   └──────────────► Scan History
+
+Assets
+   │
+   └──────────────► Risks
 ```
