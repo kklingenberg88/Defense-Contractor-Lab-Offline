@@ -1,0 +1,403 @@
+# SentinelGRC
+
+> An open-source Governance, Risk, and Compliance (GRC) automation framework built with PowerShell.
+
+---
+
+## Overview
+
+SentinelGRC is an extensible PowerShell framework designed to automate technical compliance validation, evidence collection, vulnerability correlation, asset inventory, and reporting across multiple cybersecurity frameworks.
+
+The project was created to provide a lightweight, vendor-neutral alternative to commercial Governance, Risk, and Compliance platforms while remaining modular, transparent, and extensible.
+
+Unlike traditional vulnerability scanners or compliance utilities that focus on a single standard, SentinelGRC normalizes technical evidence and maps that evidence to multiple frameworks simultaneously.
+
+Supported framework mappings include:
+
+- CMMC 2.0
+- NIST SP 800-53 Rev. 5
+- NIST SP 800-171 Rev. 3
+- NIST SP 800-172
+- DISA STIG
+- SCAP
+- CIS Benchmarks
+
+The framework is intended for:
+
+- Security Engineers
+- GRC Analysts
+- Compliance Officers
+- System Administrators
+- DoD Contractors
+- Managed Security Service Providers
+- Internal Audit Teams
+
+---
+
+# Design Philosophy
+
+SentinelGRC is built around four guiding principles.
+
+## Collect Once
+
+Evidence should be collected a single time.
+
+A password policy check, for example, should never be rewritten for every compliance framework.
+
+One technical check can satisfy controls across multiple standards.
+
+---
+
+## Normalize Everything
+
+Every technical check returns a standardized object.
+
+This allows reporting, dashboards, database storage, and framework mapping to remain independent of the individual checks.
+
+---
+
+## Modular by Design
+
+Every compliance check exists as an independent module.
+
+Adding a new check never requires modifications to the core engine.
+
+---
+
+## Vendor Neutral
+
+The framework intentionally avoids dependencies on commercial GRC platforms.
+
+All data remains portable and human-readable.
+
+---
+
+# Features
+
+## Asset Inventory
+
+Collect:
+
+- Computer Name
+- Operating System
+- IP Address
+- MAC Address
+- Domain
+- Installed Software
+- Running Services
+- CPU
+- Memory
+- TPM
+- BitLocker
+- Secure Boot
+- Local Administrators
+- Installed Updates
+
+---
+
+## Compliance Checking
+
+Technical evidence collection includes:
+
+- Password Policies
+- Audit Policy
+- Firewall Configuration
+- Windows Defender
+- Microsoft Defender for Endpoint
+- LAPS
+- Credential Guard
+- BitLocker
+- Secure Boot
+- AppLocker
+- TLS Configuration
+- SMB Configuration
+- Remote Desktop
+- Windows Services
+- Registry Settings
+- PowerShell Logging
+
+---
+
+## Vulnerability Correlation
+
+Import findings from:
+
+- Nessus
+- OpenVAS
+- Microsoft Defender
+- Qualys
+- Rapid7
+- SCAP
+- STIG Viewer
+
+---
+
+## Framework Mapping
+
+One technical check can satisfy multiple frameworks.
+
+Example:
+
+Password Complexity
+
+↓
+
+Maps automatically to:
+
+- CMMC
+- NIST 800-171
+- NIST 800-53
+- STIG
+- CIS
+
+---
+
+## Reporting
+
+Generate:
+
+- Excel
+- CSV
+- JSON
+- SQLite
+- Power BI datasets
+
+---
+
+# Repository Structure
+
+SentinelGRC/
+
+    Assets/
+    Checks/
+        Windows/
+        Linux/
+        Azure/
+        VMware/
+        Network/
+
+    Config/
+
+    Database/
+
+    Docs/
+
+    FrameworkMappings/
+
+    Logs/
+
+    Modules/
+
+    Reports/
+
+    Tests/
+
+    Invoke-SentinelGRC.ps1
+
+---
+
+# Architecture
+
+```
+Evidence Collection
+
+↓
+
+Normalization
+
+↓
+
+SQLite Database
+
+↓
+
+Framework Mapping
+
+↓
+
+Reporting Engine
+
+↓
+
+Excel / Power BI
+```
+
+---
+
+# Database
+
+The SQLite database stores:
+
+Assets
+
+Findings
+
+Controls
+
+FrameworkMappings
+
+POA&M
+
+Vulnerabilities
+
+Scan History
+
+Risk Register
+
+Evidence
+
+---
+
+# Supported Platforms
+
+Windows Server
+
+Windows 10
+
+Windows 11
+
+Ubuntu
+
+Rocky Linux
+
+Red Hat Enterprise Linux
+
+VMware ESXi
+
+Azure
+
+AWS
+
+---
+
+# Planned Modules
+
+Core
+
+Logging
+
+Database
+
+Inventory
+
+Reporting
+
+Windows Compliance
+
+Linux Compliance
+
+Azure Compliance
+
+Network Compliance
+
+SCAP Parser
+
+STIG Parser
+
+Nessus Parser
+
+Risk Engine
+
+POA&M Generator
+
+Power BI Export
+
+---
+
+# Roadmap
+
+## Release 0.1
+
+Core Framework
+
+Logging
+
+SQLite
+
+Inventory
+
+Configuration
+
+Documentation
+
+---
+
+## Release 0.2
+
+Windows Checks
+
+Asset Inventory
+
+Compliance Objects
+
+Reporting
+
+---
+
+## Release 0.3
+
+Framework Mapping
+
+CMMC
+
+NIST 800-53
+
+NIST 800-171
+
+NIST 800-172
+
+---
+
+## Release 0.4
+
+Import:
+
+Nessus
+
+SCAP
+
+STIG
+
+OpenVAS
+
+Rapid7
+
+---
+
+## Release 0.5
+
+Executive Reporting
+
+Power BI
+
+Risk Register
+
+POA&M
+
+Historical Trending
+
+---
+
+# Contributing
+
+Please read CONTRIBUTING.md before submitting pull requests.
+
+---
+
+# License
+
+MIT License
+
+---
+
+# Disclaimer
+
+SentinelGRC is an evidence collection and reporting framework.
+
+Passing technical checks does not, by itself, demonstrate compliance with any regulatory framework. Administrative, procedural, contractual, and organizational controls must be evaluated separately as part of a complete compliance assessment.
+
+---
+
+# Acknowledgements
+
+This project is inspired by operational experience using enterprise Governance, Risk, and Compliance platforms while pursuing a transparent, extensible, and vendor-neutral implementation suitable for organizations of varying sizes.
