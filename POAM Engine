@@ -1,0 +1,38 @@
+# POA&M Management Engine
+
+## Purpose
+
+Track remediation activities from discovery through validation while maintaining audit-ready documentation.
+
+---
+
+## Inputs
+
+- Failed Controls
+- Risk Register
+- Vulnerability Findings
+- Audit Results
+- Manual Exceptions
+
+---
+
+## Processing
+
+- Generate POA&M entries.
+- Assign ownership.
+- Calculate due dates.
+- Monitor remediation progress.
+- Validate completed actions.
+
+---
+
+## Outputs
+
+- POA&M Workbook
+- Milestone Tracking
+- Remediation Reports
+- Audit Evidence
+
+---
+
+## Metrics
