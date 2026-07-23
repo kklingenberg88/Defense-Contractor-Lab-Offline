@@ -1,0 +1,672 @@
+# DEVELOPMENT.md
+
+# SentinelGRC Development Guide
+
+Version: 0.1.0
+
+---
+
+# Purpose
+
+This document defines the development standards, local development environment, coding practices, testing methodology, release process, and repository workflow for SentinelGRC.
+
+The objective is to maintain a consistent, modular, and maintainable codebase while ensuring all contributions meet the project's architectural standards.
+
+---
+
+# Development Philosophy
+
+SentinelGRC follows five core principles.
+
+## 1. Modularity
+
+Every component performs a single responsibility.
+
+Examples:
+
+* Inventory collection
+* Database interaction
+* Reporting
+* Logging
+* Compliance checks
+* Framework mapping
+
+No module should contain unrelated functionality.
+
+---
+
+## 2. Reusability
+
+Technical checks are written once.
+
+Framework mappings determine which compliance standards are satisfied.
+
+Example
+
+```
+Check-PasswordPolicy.ps1
+
+↓
+
+CMMC 2.0
+
+↓
+
+NIST SP 800-171
+
+↓
+
+NIST SP 800-53
+
+↓
+
+DISA STIG
+
+↓
+
+CIS Benchmark
+```
+
+Technical evidence is never duplicated.
+
+---
+
+## 3. Configuration over Code
+
+Application behavior should be controlled through configuration files whenever possible.
+
+Examples:
+
+* Database locations
+* Logging levels
+* Framework mappings
+* Report settings
+* Plugin enablement
+
+Hardcoded values should be avoided unless absolutely necessary.
+
+---
+
+## 4. Vendor Neutrality
+
+SentinelGRC should not require commercial products.
+
+Supported components should remain open, portable, and transparent.
+
+Examples include:
+
+* SQLite
+* PowerShell
+* JSON
+* CSV
+* Excel
+* Power BI
+
+---
+
+## 5. Extensibility
+
+Adding a new compliance check should not require changes to the framework itself.
+
+The framework discovers new modules dynamically during execution.
+
+---
+
+# Development Environment
+
+## Operating Systems
+
+Supported development environments include:
+
+* Windows 11
+* Windows Server 2022
+* Ubuntu LTS
+* Rocky Linux
+* Red Hat Enterprise Linux
+
+Windows is the primary development platform.
+
+---
+
+## Required Software
+
+| Software           | Minimum Version |
+| ------------------ | --------------: |
+| PowerShell         |             7.4 |
+| Git                |   Latest Stable |
+| Visual Studio Code |   Latest Stable |
+| SQLite             |             3.x |
+| .NET Runtime       |     Current LTS |
+
+---
+
+## Recommended Visual Studio Code Extensions
+
+* PowerShell
+* GitLens
+* Markdown All in One
+* Error Lens
+* SQLite Viewer
+* YAML
+* JSON Language Features
+
+---
+
+# Required PowerShell Modules
+
+Install the following modules before development.
+
+```
+ImportExcel
+
+Pester
+
+PSScriptAnalyzer
+
+Microsoft.PowerShell.SecretManagement
+
+ThreadJob
+
+PSWriteHTML (optional)
+```
+
+Modules should be installed for the current user whenever possible.
+
+---
+
+# Repository Layout
+
+```
+SentinelGRC/
+
+Assets/
+
+Checks/
+
+Config/
+
+Database/
+
+Docs/
+
+FrameworkMappings/
+
+Logs/
+
+Modules/
+
+Reports/
+
+Samples/
+
+SQL/
+
+Tests/
+
+Tools/
+
+Invoke-SentinelGRC.ps1
+
+Install.ps1
+```
+
+Each directory has a single purpose.
+
+---
+
+# Coding Standards
+
+## Approved Verbs
+
+Use only Microsoft-approved PowerShell verbs.
+
+Examples
+
+```
+Get-
+
+Set-
+
+Test-
+
+Invoke-
+
+Initialize-
+
+Import-
+
+Export-
+
+Remove-
+
+New-
+```
+
+Avoid custom verbs.
+
+---
+
+## Naming Conventions
+
+Functions
+
+```
+Verb-Noun
+```
+
+Example
+
+```
+Get-Inventory
+
+Test-BitLocker
+
+Invoke-ComplianceScan
+```
+
+Variables
+
+```
+camelCase
+```
+
+Private functions
+
+```
+Private-FunctionName
+```
+
+Classes
+
+```
+PascalCase
+```
+
+Modules
+
+```
+PascalCase.psm1
+```
+
+---
+
+# Module Design
+
+Every module should perform one responsibility.
+
+Example
+
+```
+Logging.psm1
+
+↓
+
+Only logging.
+```
+
+Not
+
+```
+Logging
+
+Inventory
+
+Reporting
+
+Database
+```
+
+inside the same module.
+
+---
+
+# Compliance Checks
+
+Every compliance check exists as its own script.
+
+Example
+
+```
+Checks/
+
+Windows/
+
+Check-BitLocker.ps1
+
+Check-Firewall.ps1
+
+Check-LAPS.ps1
+```
+
+No script should exceed its intended responsibility.
+
+---
+
+# Standard Compliance Object
+
+Every compliance check returns the same object.
+
+```
+Asset
+
+Hostname
+
+IPAddress
+
+CheckID
+
+Category
+
+Severity
+
+Status
+
+Evidence
+
+Remediation
+
+Timestamp
+```
+
+No compliance check should write directly to:
+
+* Excel
+* SQLite
+* HTML
+* CSV
+
+Checks only return objects.
+
+---
+
+# Logging
+
+Logging is centralized.
+
+Every module uses the logging engine.
+
+Levels
+
+```
+Information
+
+Warning
+
+Error
+
+Debug
+```
+
+Example
+
+```
+[INFO]
+
+Inventory Started
+```
+
+```
+[WARNING]
+
+BitLocker Not Enabled
+```
+
+```
+[ERROR]
+
+Unable to connect to SQLite database.
+```
+
+---
+
+# Error Handling
+
+All public functions should implement structured exception handling.
+
+Example
+
+```
+try
+
+catch
+
+finally
+```
+
+Exceptions should be logged before being rethrown or handled.
+
+---
+
+# Database Development
+
+SQLite is the authoritative data source.
+
+Developers should never edit the database manually during normal operation.
+
+Schema changes should be implemented through migration scripts stored under:
+
+```
+SQL/
+
+Migrations/
+```
+
+---
+
+# Testing
+
+SentinelGRC uses Pester.
+
+Testing categories include:
+
+* Unit Tests
+* Integration Tests
+* Module Tests
+* Parser Tests
+* Database Tests
+* Reporting Tests
+
+Every new feature should include tests where practical.
+
+---
+
+# Static Analysis
+
+Every commit should pass PSScriptAnalyzer.
+
+Warnings should be resolved before merging.
+
+Rules may only be suppressed with documented justification.
+
+---
+
+# Debugging
+
+Developers should use:
+
+```
+Write-Debug
+
+Write-Verbose
+```
+
+instead of temporary output statements.
+
+Production code should not contain debugging artifacts.
+
+---
+
+# Configuration Files
+
+Configuration is stored in JSON.
+
+Examples include:
+
+```
+Database.json
+
+Frameworks.json
+
+Logging.json
+
+ReportSettings.json
+```
+
+Configuration files should be validated during application startup.
+
+---
+
+# Version Control
+
+Branch strategy
+
+```
+main
+
+develop
+
+feature/<feature-name>
+
+bugfix/<issue>
+
+release/<version>
+
+hotfix/<version>
+```
+
+---
+
+# Commit Standards
+
+Commit messages should describe intent.
+
+Examples
+
+```
+Add SQLite initialization module
+
+Implement inventory collection
+
+Refactor reporting engine
+
+Fix STIG parser
+
+Update framework mappings
+```
+
+Avoid generic messages such as:
+
+```
+Update
+
+Fixes
+
+Changes
+
+Testing
+```
+
+---
+
+# Release Process
+
+Each release follows Semantic Versioning.
+
+```
+Major.Minor.Patch
+```
+
+Example
+
+```
+0.1.0
+```
+
+Framework established.
+
+```
+0.2.0
+```
+
+Windows compliance checks.
+
+```
+0.3.0
+```
+
+Framework mappings.
+
+```
+1.0.0
+```
+
+Production-ready release.
+
+---
+
+# Documentation Requirements
+
+Every public function should include comment-based help.
+
+Documentation should include:
+
+* Synopsis
+* Description
+* Parameters
+* Examples
+* Outputs
+* Notes
+
+All Markdown documents should be updated when behavior changes.
+
+---
+
+# Security Considerations
+
+SentinelGRC is designed to collect evidence, not modify production systems by default.
+
+Checks should be read-only unless remediation is explicitly requested.
+
+Sensitive information such as credentials, API tokens, or secrets must never be hardcoded. Use PowerShell SecretManagement or environment-specific secret providers.
+
+Logs and reports should avoid exposing sensitive values unless explicitly required for forensic evidence.
+
+---
+
+# Continuous Integration
+
+Future releases should include GitHub Actions to perform:
+
+* PowerShell syntax validation
+* PSScriptAnalyzer
+* Pester test execution
+* Markdown linting
+* Repository structure validation
+
+No release should be tagged unless all automated validation steps complete successfully.
+
+---
+
+# Future Development
+
+Planned capabilities include:
+
+* SQLite migration framework
+* OSCAL import and export
+* STIG Viewer (.ckl) parser
+* SCAP/XCCDF parser
+* Nessus (.nessus) parser
+* OpenVAS parser
+* Power BI data model generation
+* POA&M generation
+* Risk register management
+* Historical compliance trending
+* Plugin marketplace
+* REST API
+* Web dashboard
+
+---
+
+# Development Goals
+
+The long-term objective of SentinelGRC is to provide a modular, extensible, and vendor-neutral platform capable of supporting technical evidence collection and compliance reporting across multiple regulatory frameworks. Every architectural decision should favor maintainability, transparency, portability, and reuse over framework-specific implementations.
