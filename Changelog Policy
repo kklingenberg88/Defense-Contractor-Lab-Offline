@@ -1,0 +1,388 @@
+# Changelog
+
+All notable changes to **SentinelGRC** will be documented in this file.
+Note that all changes are logged and timestamped in order to track authentication, authorization and for auditing purposes.
+
+The project adheres to **Semantic Versioning (SemVer)** and follows the principles of **Keep a Changelog**.
+
+Version format:
+
+```text
+MAJOR.MINOR.PATCH
+```
+
+Example:
+
+```text
+1.4.2
+```
+
+* **MAJOR** – Breaking changes or significant architectural revisions.
+* **MINOR** – New features and enhancements that remain backward compatible.
+* **PATCH** – Bug fixes, documentation updates, and minor improvements.
+
+---
+
+# [Unreleased]
+
+## Planned
+
+### Core Framework
+
+* Plugin discovery engine
+* Configuration validation
+* Improved logging subsystem
+* Automatic dependency verification
+
+### Inventory
+
+* Linux inventory collection
+* VMware inventory collection
+* Azure inventory collection
+* AWS inventory collection
+* Cisco device inventory
+* Palo Alto firewall inventory
+
+### Compliance
+
+* Windows security baseline checks
+* Linux CIS benchmark checks
+* BitLocker compliance
+* Microsoft Defender compliance
+* Local Administrator Password Solution (LAPS) validation
+* Audit Policy validation
+* Windows Firewall validation
+* Secure Boot validation
+* Credential Guard validation
+* TLS configuration validation
+
+### Vulnerability Management
+
+* Nessus XML parser
+* OpenVAS parser
+* Microsoft Defender Vulnerability Management integration
+* Rapid7 InsightVM parser
+* Qualys parser
+
+### Compliance Frameworks
+
+* CMMC 2.0 mappings
+* NIST SP 800-53 Rev. 5 mappings
+* NIST SP 800-171 Rev. 3 mappings
+* NIST SP 800-172 mappings
+* DISA STIG mappings
+* CIS Benchmarks
+
+### Reporting
+
+* Executive dashboard
+* Excel workbook generation
+* CSV export
+* JSON export
+* SQLite reporting views
+* Power BI integration
+* Historical compliance reporting
+* POA&M generation
+* Risk register generation
+
+---
+
+# [0.1.0] - Initial Framework Release
+
+## Added
+
+### Project Foundation
+
+* Initial repository structure established.
+* Modular PowerShell architecture defined.
+* Documentation framework completed.
+* Semantic versioning adopted.
+* Standard repository layout implemented.
+
+### Documentation
+
+Added the following project documentation:
+
+* README.md
+* ARCHITECTURE.md
+* DATABASE.md
+* DEVELOPMENT.md
+* CONTRIBUTING.md
+* CHANGELOG.md
+
+### Core Architecture
+
+Defined the initial architecture consisting of:
+
+* Core framework
+* Logging engine
+* Inventory engine
+* Reporting engine
+* SQLite database layer
+* Plugin discovery architecture
+* Configuration management subsystem
+
+### Database Design
+
+Initial relational database model designed.
+
+Core entities include:
+
+* Assets
+* TechnicalChecks
+* TechnicalEvidence
+* Frameworks
+* Controls
+* FrameworkMappings
+* Vulnerabilities
+* STIGFindings
+* SCAPResults
+* POAM
+* Risks
+* ScanHistory
+
+### Repository Layout
+
+Established standard project structure.
+
+```text
+SentinelGRC/
+
+Assets/
+
+Checks/
+
+Config/
+
+Database/
+
+Docs/
+
+FrameworkMappings/
+
+Logs/
+
+Modules/
+
+Reports/
+
+Samples/
+
+SQL/
+
+Tests/
+
+Tools/
+
+Invoke-SentinelGRC.ps1
+
+Install.ps1
+```
+
+### Development Standards
+
+Defined project-wide standards for:
+
+* PowerShell naming conventions
+* Module organization
+* Logging
+* Error handling
+* Testing
+* Documentation
+* Database migrations
+* Branch strategy
+* Pull request workflow
+
+### Coding Standards
+
+Established:
+
+* Approved PowerShell verbs
+* One responsibility per module
+* One compliance check per script
+* Standardized compliance object model
+* JSON-based configuration
+* SQLite as the authoritative data source
+
+### Design Goals
+
+Established the following architectural principles:
+
+* Collect evidence once.
+* Normalize technical evidence.
+* Separate evidence collection from framework mappings.
+* Support multiple compliance frameworks from a single technical check.
+* Maintain vendor neutrality.
+* Favor modular expansion over monolithic development.
+
+---
+
+## Changed
+
+Nothing.
+
+Initial release.
+
+---
+
+## Deprecated
+
+None.
+
+---
+
+## Removed
+
+None.
+
+---
+
+## Fixed
+
+None.
+
+---
+
+## Security
+
+Established the following security principles:
+
+* Read-only evidence collection by default.
+* No embedded credentials.
+* No hardcoded secrets.
+* Centralized logging.
+* Configuration validation during startup.
+* Standardized exception handling.
+* SQLite database integrity validation.
+* Framework mapping isolation.
+
+---
+
+# Release Roadmap
+
+## Version 0.2.0
+
+### Planned
+
+Windows compliance engine.
+
+Expected additions:
+
+* Password Policy
+* Firewall
+* Defender
+* BitLocker
+* Secure Boot
+* Audit Policy
+* LAPS
+* Credential Guard
+* AppLocker
+* Local Administrator validation
+* Inventory enhancements
+
+---
+
+## Version 0.3.0
+
+### Planned
+
+Compliance framework implementation.
+
+Expected additions:
+
+* CMMC 2.0 mappings
+* NIST SP 800-53 Rev. 5 mappings
+* NIST SP 800-171 Rev. 3 mappings
+* NIST SP 800-172 mappings
+* STIG mappings
+* CIS Benchmark mappings
+
+---
+
+## Version 0.4.0
+
+### Planned
+
+Scanner integration.
+
+Expected additions:
+
+* Nessus XML import
+* SCAP/XCCDF parser
+* DISA STIG CKL parser
+* OpenVAS parser
+* Rapid7 parser
+* Qualys parser
+
+---
+
+## Version 0.5.0
+
+### Planned
+
+Reporting platform.
+
+Expected additions:
+
+* Executive dashboards
+* Power BI integration
+* Historical reporting
+* Compliance scorecards
+* Risk register
+* POA&M management
+* Trend analysis
+* Asset lifecycle reporting
+
+---
+
+## Version 1.0.0
+
+### Planned
+
+Production-ready release.
+
+Target capabilities include:
+
+* Stable plugin architecture
+* Complete Windows compliance library
+* Multi-framework control mappings
+* Vulnerability correlation engine
+* STIG and SCAP integration
+* Enterprise reporting
+* Power BI dashboards
+* Historical compliance tracking
+* Automated POA&M generation
+* Risk management workflows
+* Comprehensive documentation
+* Public release
+
+---
+
+# Versioning Policy
+
+SentinelGRC follows Semantic Versioning.
+
+Examples:
+
+| Version | Meaning                         |
+| ------- | ------------------------------- |
+| 0.1.0   | Initial framework release       |
+| 0.2.0   | New functionality added         |
+| 0.2.1   | Bug fixes only                  |
+| 0.3.0   | Framework mapping enhancements  |
+| 1.0.0   | First stable production release |
+| 2.0.0   | Breaking architectural changes  |
+
+---
+
+# Support Lifecycle
+
+Development releases (`0.x.x`) may introduce architectural changes while the framework evolves.
+
+Beginning with **1.0.0**, releases will prioritize backward compatibility, documented upgrade paths, and database migration support.
+
+---
+
+# Notes
+
+This changelog records functional and architectural changes only. Documentation revisions, formatting improvements, and minor editorial updates that do not affect behavior may be omitted unless they accompany a functional release.
