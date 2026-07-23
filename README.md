@@ -1,22 +1,162 @@
 Welcome to the GRC Automation Project: Sentinel
 
-I spent multiple years working as a cyber defense and GRC personnel for a depeartment of defense contractor.
-My goal in making this project was wondering if it was possible to fully automate my former position.
-Offline networks are sometimes a necessity driven by security. My job as a GRC technician was to generate and present information that proved we were compliant.
-This included the 4 standards you will see in the controls folder. Having knowledge is a lot, verification and auditing can be time consuming.
+# SentinelGRC
 
-In this project you will see that I have laid the ground work of doing exactly that: Automating to save time and use your knowledge and presentation skills.
-This took a vendorless approach to demonstrate knowledge, application of information and AI/automation assisted delivery.
-Most of my former position spent entirely too much time doing leg work: analyzing and demonstrating to create presentable information and artifacts.
-I believe I have all but achieved my original goal within a matter of a week. But as well know, this type or project always required fine tuning.
+> **An open-source Governance, Risk, and Compliance (GRC) automation platform designed to collect technical evidence, normalize compliance data, correlate vulnerabilities, and generate actionable reporting across multiple cybersecurity frameworks.**
 
-Controls I previously worked with:
-800-53
-800-171
-800-172
-CMMC
-NIST 27001
-PCI-DSS
-HIPAA
+---
 
-Enjoy!
+## Overview
+
+SentinelGRC is a vendor-neutral GRC platform built to demonstrate how compliance programs can be implemented using open technologies instead of commercial governance platforms.
+
+The project centralizes technical evidence from multiple sources into a normalized SQLite database, correlates findings across compliance frameworks, and produces technical and executive reporting suitable for governance, risk, and audit activities.
+
+The objective is to separate **evidence collection** from **compliance mapping**, allowing a single technical assessment to satisfy multiple regulatory frameworks.
+
+---
+
+## Key Capabilities
+
+* Asset Inventory Management
+* Technical Compliance Validation
+* Vulnerability Correlation
+* Risk Register Support
+* POA&M Generation
+* Continuous Monitoring
+* Historical Compliance Tracking
+* Executive Reporting
+* Power BI Integration
+* SQLite Evidence Repository
+* Multi-Framework Compliance Mapping
+
+---
+
+## Supported Compliance Frameworks
+
+* CMMC 2.0
+* NIST SP 800-53 Rev. 5
+* NIST SP 800-171 Rev. 3
+* NIST SP 800-172
+* DISA STIG
+* SCAP
+* CIS Benchmarks
+
+---
+
+## Technology Stack
+
+| Component               | Technology                      |
+| ----------------------- | ------------------------------- |
+| Primary Language        | PowerShell 7                    |
+| Database                | SQLite                          |
+| Reporting               | Microsoft Excel, HTML, Power BI |
+| Configuration           | JSON                            |
+| Documentation           | Markdown                        |
+| Version Control         | Git / GitHub                    |
+| Testing                 | Pester                          |
+| Static Analysis         | PSScriptAnalyzer                |
+| Development Environment | Visual Studio Code              |
+| Data Formats            | XML, CSV, JSON, HTML            |
+
+---
+
+## Core Architecture
+
+```text
+Evidence Collection
+        │
+        ▼
+Normalization Engine
+        │
+        ▼
+SQLite Evidence Repository
+        │
+        ├── Compliance Mapping
+        ├── Vulnerability Correlation
+        ├── Risk Register
+        ├── POA&M
+        └── Historical Scan Data
+                │
+                ▼
+Reporting Engine
+        │
+        ├── Excel
+        ├── HTML
+        ├── JSON
+        └── Power BI
+```
+
+---
+
+## Current Modules
+
+* Asset Inventory
+* Compliance Engine
+* Framework Mapping
+* Vulnerability Import
+* STIG Processing
+* SCAP Processing
+* Risk Management
+* Reporting
+* Database Management
+* Logging
+
+---
+
+## Repository Structure
+
+```text
+SentinelGRC/
+├── Assets/
+├── Checks/
+├── Config/
+├── Database/
+├── Docs/
+├── FrameworkMappings/
+├── Logs/
+├── Modules/
+├── Reports/
+├── SQL/
+├── Tests/
+└── Tools/
+```
+
+---
+
+## Design Principles
+
+* Collect evidence once and reuse it across multiple compliance frameworks.
+* Normalize all technical findings into a common data model.
+* Separate technical implementation from governance logic.
+* Maintain a modular, plugin-based architecture.
+* Favor open, portable technologies over proprietary platforms.
+* Produce repeatable, auditable, and evidence-based reporting.
+
+---
+
+## Intended Audience
+
+SentinelGRC is designed for:
+
+* Governance, Risk, and Compliance (GRC) Teams
+* Security Engineers
+* Compliance Analysts
+* Internal Audit
+* DoD Contractors
+* Managed Security Service Providers (MSSPs)
+* Security Operations (SecOps)
+* IT Administrators
+
+---
+
+## Project Status
+
+
+The project is under active development and currently focuses on establishing the core platform architecture, evidence collection model, database design, compliance mappings, and reporting framework.
+
+---
+
+## Long-Term Vision
+
+SentinelGRC aims to provide an extensible, open-source alternative to commercial GRC platforms by integrating technical evidence collection, vulnerability management, compliance assessment, risk management, and executive reporting into a single, vendor-neutral platform.
